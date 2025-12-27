@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <link rel="manifest" href="manifest.json">
     <title>Retro Tetris</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Courier New', monospace;
             background: #0f0f1e;
@@ -37,21 +35,19 @@
             justify-content: center;
             align-items: center;
         }
-        .screen.active {
-            display: flex;
-        }
+        .screen.active { display: flex; }
         h1 {
-            font-size: 48px;
+            font-size: 40px;
             color: #00ff00;
             text-shadow: 0 0 20px #00ff00;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         .menu-btn {
             width: 80%;
             max-width: 300px;
-            padding: 18px;
-            margin: 10px;
-            font-size: 20px;
+            padding: 15px;
+            margin: 8px;
+            font-size: 18px;
             font-family: 'Courier New', monospace;
             background: #16213e;
             color: #00ff00;
@@ -63,59 +59,67 @@
             color: #16213e;
         }
         #game-screen {
-            padding: 10px;
-            justify-content: flex-start;
+            padding: 3px;
+            justify-content: space-between;
+            overflow: hidden;
         }
         #stats {
             display: flex;
             justify-content: space-around;
             width: 100%;
-            margin-bottom: 15px;
-            font-size: 16px;
+            margin-bottom: 3px;
+            font-size: 12px;
+            flex-shrink: 0;
         }
         .stat-value {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
         }
         #game-area {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            gap: 5px;
+            margin-bottom: 3px;
             justify-content: center;
+            flex-shrink: 0;
         }
         #board {
             background: #0a0a1a;
-            border: 3px solid #00ff00;
+            border: 2px solid #00ff00;
+            width: 180px;
+            height: 360px;
         }
         #side {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 3px;
         }
         .preview {
             background: #0a0a1a;
             border: 2px solid #00ff00;
-            padding: 8px;
+            padding: 3px;
             text-align: center;
         }
         .preview-label {
-            font-size: 11px;
-            margin-bottom: 5px;
+            font-size: 8px;
+            margin-bottom: 2px;
         }
         #controls {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 3px;
             width: 100%;
+            padding: 3px;
+            flex-shrink: 0;
         }
         .btn {
             background: #16213e;
             color: #00ff00;
             border: 2px solid #00ff00;
-            font-size: 28px;
-            padding: 20px;
+            font-size: 18px;
+            padding: 8px;
             cursor: pointer;
             font-family: 'Courier New', monospace;
+            min-height: 40px;
         }
         .btn:active {
             background: #00ff00;
@@ -123,7 +127,7 @@
         }
         .btn-wide {
             grid-column: span 3;
-            font-size: 18px;
+            font-size: 14px;
         }
         #gameover {
             display: none;
@@ -132,19 +136,17 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: rgba(26, 26, 46, 0.98);
-            padding: 30px;
+            padding: 20px;
             border: 3px solid #ff0000;
             text-align: center;
             z-index: 100;
-            min-width: 300px;
+            max-width: 90%;
         }
-        #gameover.show {
-            display: block;
-        }
+        #gameover.show { display: block; }
         #gameover h2 {
             color: #ff0000;
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-size: 26px;
+            margin-bottom: 15px;
         }
         .setting {
             width: 80%;
@@ -163,9 +165,7 @@
             position: relative;
             cursor: pointer;
         }
-        .toggle.on {
-            background: #00ff00;
-        }
+        .toggle.on { background: #00ff00; }
         .toggle::after {
             content: '';
             position: absolute;
@@ -187,20 +187,21 @@
         .help-text {
             text-align: left;
             width: 80%;
-            line-height: 1.8;
+            line-height: 1.6;
+            font-size: 14px;
         }
         .help-text h3 {
             color: #ffff00;
-            margin: 15px 0 10px;
+            margin: 12px 0 8px;
         }
     </style>
 </head>
 <body>
     <div id="app">
         <div id="sound-init" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.95);z-index:9999;align-items:center;justify-content:center;">
-            <div style="text-align:center;padding:40px;background:#1a1a2e;border:3px solid #00ff00;max-width:400px;">
-                <h2 style="color:#00ff00;font-size:32px;margin-bottom:20px;">🔊 SOUND</h2>
-                <p style="font-size:18px;margin-bottom:30px;">Für Sound & Musik bitte tippen!</p>
+            <div style="text-align:center;padding:30px;background:#1a1a2e;border:3px solid #00ff00;max-width:350px;">
+                <h2 style="color:#00ff00;font-size:28px;margin-bottom:15px;">🔊 SOUND</h2>
+                <p style="font-size:16px;margin-bottom:20px;">Für Sound & Musik tippen!</p>
                 <button class="menu-btn" id="btn-sound-activate">✓ SOUND AN</button>
             </div>
         </div>
@@ -220,21 +221,21 @@
                 <div>LINES<br><span class="stat-value" id="lines">0</span></div>
             </div>
             <div id="game-area">
-                <canvas id="board" width="200" height="400"></canvas>
+                <canvas id="board" width="180" height="360"></canvas>
                 <div id="side">
                     <div class="preview">
                         <div class="preview-label">NEXT</div>
-                        <canvas id="next1" width="60" height="60"></canvas>
+                        <canvas id="next1" width="50" height="50"></canvas>
                     </div>
                     <div class="preview">
-                        <canvas id="next2" width="60" height="60"></canvas>
+                        <canvas id="next2" width="50" height="50"></canvas>
                     </div>
                     <div class="preview">
-                        <canvas id="next3" width="60" height="60"></canvas>
+                        <canvas id="next3" width="50" height="50"></canvas>
                     </div>
                     <div class="preview">
                         <div class="preview-label">HOLD</div>
-                        <canvas id="hold" width="60" height="60"></canvas>
+                        <canvas id="hold" width="50" height="50"></canvas>
                     </div>
                 </div>
             </div>
@@ -249,15 +250,15 @@
             </div>
             <div id="gameover">
                 <h2>GAME OVER</h2>
-                <p style="font-size:20px;margin:15px 0;">Score: <span id="final-score">0</span></p>
-                <p id="new-hs" style="color:#ffff00;margin-bottom:20px;"></p>
-                <button class="menu-btn" id="btn-restart">NOCHMAL</button>
-                <button class="menu-btn" id="btn-menu">MENÜ</button>
+                <p style="font-size:16px;margin:10px 0;">Score: <span id="final-score">0</span></p>
+                <p id="new-hs" style="color:#ffff00;margin-bottom:12px;font-size:13px;"></p>
+                <button class="menu-btn" id="btn-restart" style="padding:10px;margin:5px;font-size:16px;">NOCHMAL</button>
+                <button class="menu-btn" id="btn-menu" style="padding:10px;margin:5px;font-size:16px;">MENÜ</button>
             </div>
         </div>
 
         <div id="settings-screen" class="screen">
-            <h1 style="font-size:32px;">EINSTELLUNGEN</h1>
+            <h1 style="font-size:28px;">EINSTELLUNGEN</h1>
             <div class="setting">
                 <span>Sound</span>
                 <div class="toggle on" id="sound-tog"></div>
@@ -270,14 +271,14 @@
         </div>
 
         <div id="highscore-screen" class="screen">
-            <h1 style="font-size:32px;">HIGHSCORE</h1>
+            <h1 style="font-size:28px;">HIGHSCORE</h1>
             <div class="hs-display" id="hs-val">0</div>
             <button class="menu-btn" id="btn-reset-hs">ZURÜCKSETZEN</button>
             <button class="menu-btn" id="btn-highscore-back">ZURÜCK</button>
         </div>
 
         <div id="help-screen" class="screen">
-            <h1 style="font-size:32px;">ANLEITUNG</h1>
+            <h1 style="font-size:28px;">ANLEITUNG</h1>
             <div class="help-text">
                 <h3>STEUERUNG</h3>
                 <p>◀ ▶ Bewegen | 🔄 Drehen<br>⬇ Schneller | ⏬ Abwerfen<br>HOLD Stein speichern</p>
@@ -291,599 +292,81 @@
     </div>
 
     <script>
-        console.log('Tetris starting...');
-
-        // Audio System
-        let audioCtx = null;
-        let audioReady = false;
-        let bgMusic = null;
+        console.log('Tetris loading...');
         
-        const settings = {
-            sound: true,
-            vib: true
-        };
-
-        const melody = [
-            {note:659,dur:0.4},{note:494,dur:0.2},{note:523,dur:0.2},
-            {note:587,dur:0.4},{note:523,dur:0.2},{note:494,dur:0.2},
-            {note:440,dur:0.4},{note:440,dur:0.2},{note:523,dur:0.2},
-            {note:659,dur:0.4},{note:587,dur:0.2},{note:523,dur:0.2},
-            {note:494,dur:0.6},{note:523,dur:0.2},{note:587,dur:0.4},
-            {note:659,dur:0.4},{note:523,dur:0.4},{note:440,dur:0.4},
-            {note:440,dur:0.8},{note:587,dur:0.4},{note:659,dur:0.2},{note:784,dur:0.2},
-            {note:880,dur:0.4},{note:784,dur:0.2},{note:659,dur:0.2},
-            {note:523,dur:0.6},{note:523,dur:0.2},{note:659,dur:0.4},
-            {note:587,dur:0.2},{note:523,dur:0.2},{note:494,dur:0.4},
-            {note:494,dur:0.2},{note:523,dur:0.2},{note:587,dur:0.4},
-            {note:659,dur:0.4},{note:523,dur:0.4},{note:440,dur:0.4},{note:440,dur:0.8}
-        ];
-
-        function activateSound() {
-            console.log('Activating sound...');
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.frequency.value = 600;
-            osc.type = 'square';
-            gain.gain.value = 0.15;
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-            audioReady = true;
-            document.getElementById('sound-init').style.display = 'none';
-            setTimeout(() => beep(700, 0.08), 100);
-            setTimeout(() => beep(900, 0.08), 200);
-        }
-
-        function beep(freq, dur) {
-            if (!settings.sound || !audioReady) return;
-            try {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.frequency.value = freq;
-                osc.type = 'square';
-                gain.gain.value = 0.15;
-                osc.start();
-                osc.stop(audioCtx.currentTime + dur);
-            } catch(e) {
-                console.error('Beep error:', e);
-            }
-        }
-
-        function playBGMusic() {
-            if (!settings.sound || !audioReady || bgMusic) return;
-            console.log('Starting background music...');
-            let idx = 0;
-            
-            function playNote() {
-                if (!settings.sound || !gameState || gameState.over) {
-                    bgMusic = null;
-                    return;
-                }
-                const note = melody[idx];
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.frequency.value = note.note;
-                osc.type = 'square';
-                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + note.dur);
-                osc.start();
-                osc.stop(audioCtx.currentTime + note.dur);
-                idx = (idx + 1) % melody.length;
-                bgMusic = setTimeout(playNote, note.dur * 1000);
-            }
-            playNote();
-        }
-
-        function stopBGMusic() {
-            if (bgMusic) {
-                clearTimeout(bgMusic);
-                bgMusic = null;
-                console.log('Stopped background music');
-            }
-        }
-
-        function vibrate(ms) {
-            if (settings.vib && navigator.vibrate) {
-                navigator.vibrate(ms);
-            }
-        }
-
-        function toggleSetting(key) {
-            settings[key] = !settings[key];
-            document.getElementById(key + '-tog').classList.toggle('on');
-            vibrate(20);
-            console.log('Toggled', key, ':', settings[key]);
-        }
-
-        // Konstanten
-        const COLS = 10;
-        const ROWS = 20;
-        const SIZE = 20;
+        let audioCtx=null,audioReady=false,bgMusic=null;
+        const settings={sound:true,vib:true};
+        const melody=[{note:659,dur:0.4},{note:494,dur:0.2},{note:523,dur:0.2},{note:587,dur:0.4},{note:523,dur:0.2},{note:494,dur:0.2},{note:440,dur:0.4},{note:440,dur:0.2},{note:523,dur:0.2},{note:659,dur:0.4},{note:587,dur:0.2},{note:523,dur:0.2},{note:494,dur:0.6},{note:523,dur:0.2},{note:587,dur:0.4},{note:659,dur:0.4},{note:523,dur:0.4},{note:440,dur:0.4},{note:440,dur:0.8}];
         
-        const SHAPES = {
-            I: [[1,1,1,1]],
-            O: [[1,1],[1,1]],
-            T: [[0,1,0],[1,1,1]],
-            S: [[0,1,1],[1,1,0]],
-            Z: [[1,1,0],[0,1,1]],
-            J: [[1,0,0],[1,1,1]],
-            L: [[0,0,1],[1,1,1]]
-        };
-
-        const COLORS = {
-            I: '#00ffff',
-            O: '#ffff00',
-            T: '#ff00ff',
-            S: '#00ff00',
-            Z: '#ff0000',
-            J: '#0000ff',
-            L: '#ff8800'
-        };
-
-        // Canvas Setup
-        const boardCanvas = document.getElementById('board');
-        const boardCtx = boardCanvas.getContext('2d');
-        const holdCanvas = document.getElementById('hold');
-        const holdCtx = holdCanvas.getContext('2d');
-        const nextCanvases = [
-            document.getElementById('next1').getContext('2d'),
-            document.getElementById('next2').getContext('2d'),
-            document.getElementById('next3').getContext('2d')
-        ];
-
-        // Game State
-        let gameState = {
-            board: Array(ROWS).fill().map(() => Array(COLS).fill(0)),
-            current: null,
-            next: [],
-            hold: null,
-            canHold: true,
-            score: 0,
-            lines: 0,
-            level: 1,
-            over: false,
-            paused: false,
-            lastTime: 0,
-            drop: 0
-        };
-
-        let animFrame = null;
-
-        // Hilfsfunktionen
-        function showScreen(screenId) {
-            console.log('Showing screen:', screenId);
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-            
-            if (screenId === 'highscore-screen') {
-                const hs = localStorage.getItem('tetris-hs') || '0';
-                document.getElementById('hs-val').textContent = hs;
-            }
-            
-            if (screenId === 'menu') {
-                document.getElementById('gameover').classList.remove('show');
-                stopBGMusic();
-            }
-        }
-
-        function createPiece() {
-            const types = Object.keys(SHAPES);
-            const type = types[Math.floor(Math.random() * types.length)];
-            return {
-                type: type,
-                shape: SHAPES[type],
-                color: COLORS[type],
-                x: Math.floor(COLS / 2) - Math.floor(SHAPES[type][0].length / 2),
-                y: 0
-            };
-        }
-
-        function drawBlock(ctx, x, y, color) {
-            ctx.fillStyle = color;
-            ctx.fillRect(x * SIZE, y * SIZE, SIZE, SIZE);
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(x * SIZE, y * SIZE, SIZE, SIZE);
-        }
-
-        function drawBoard() {
-            boardCtx.fillStyle = '#0a0a1a';
-            boardCtx.fillRect(0, 0, 200, 400);
-            
-            for (let y = 0; y < ROWS; y++) {
-                for (let x = 0; x < COLS; x++) {
-                    if (gameState.board[y][x]) {
-                        drawBlock(boardCtx, x, y, gameState.board[y][x]);
-                    }
-                }
-            }
-            
-            if (gameState.current) {
-                const p = gameState.current;
-                p.shape.forEach((row, y) => {
-                    row.forEach((val, x) => {
-                        if (val) {
-                            drawBlock(boardCtx, p.x + x, p.y + y, p.color);
-                        }
-                    });
-                });
-            }
-        }
-
-        function drawPreview(ctx, piece) {
-            ctx.fillStyle = '#0a0a1a';
-            ctx.fillRect(0, 0, 60, 60);
-            
-            if (piece) {
-                const ox = (3 - piece.shape[0].length) / 2;
-                const oy = (3 - piece.shape.length) / 2;
-                piece.shape.forEach((row, y) => {
-                    row.forEach((val, x) => {
-                        if (val) {
-                            drawBlock(ctx, ox + x, oy + y, piece.color);
-                        }
-                    });
-                });
-            }
-        }
-
-        function collision(offsetX, offsetY) {
-            const p = gameState.current;
-            return p.shape.some((row, y) => {
-                return row.some((val, x) => {
-                    if (!val) return false;
-                    const nx = p.x + x + offsetX;
-                    const ny = p.y + y + offsetY;
-                    return nx < 0 || nx >= COLS || ny >= ROWS || (ny >= 0 && gameState.board[ny][nx]);
-                });
-            });
-        }
-
-        function merge() {
-            const p = gameState.current;
-            p.shape.forEach((row, y) => {
-                row.forEach((val, x) => {
-                    if (val && p.y + y >= 0) {
-                        gameState.board[p.y + y][p.x + x] = p.color;
-                    }
-                });
-            });
-        }
-
-        function clearLines() {
-            let cleared = 0;
-            for (let y = ROWS - 1; y >= 0; y--) {
-                if (gameState.board[y].every(c => c !== 0)) {
-                    gameState.board.splice(y, 1);
-                    gameState.board.unshift(Array(COLS).fill(0));
-                    cleared++;
-                    y++;
-                }
-            }
-            
-            if (cleared > 0) {
-                const pts = [0, 100, 300, 500, 800];
-                gameState.score += pts[cleared] * gameState.level;
-                gameState.lines += cleared;
-                gameState.level = Math.floor(gameState.lines / 10) + 1;
-                beep(600, 0.1);
-                vibrate(100);
-                updateUI();
-            }
-        }
-
-        function nextPiece() {
-            gameState.current = gameState.next.shift();
-            gameState.next.push(createPiece());
-            gameState.canHold = true;
-            
-            if (collision(0, 0)) {
-                gameOver();
-            }
-            
-            nextCanvases.forEach((ctx, i) => {
-                drawPreview(ctx, gameState.next[i]);
-            });
-        }
-
-        function gameOver() {
-            gameState.over = true;
-            if (animFrame) cancelAnimationFrame(animFrame);
-            stopBGMusic();
-            
-            const hs = parseInt(localStorage.getItem('tetris-hs') || '0');
-            if (gameState.score > hs) {
-                localStorage.setItem('tetris-hs', gameState.score);
-                document.getElementById('new-hs').textContent = '🎉 NEUER HIGHSCORE! 🎉';
-            } else {
-                document.getElementById('new-hs').textContent = '';
-            }
-            
-            document.getElementById('final-score').textContent = gameState.score;
-            document.getElementById('gameover').classList.add('show');
-            beep(200, 0.5);
-            vibrate([100, 50, 100]);
-        }
-
-        function gameLoop(time = 0) {
-            if (gameState.over) return;
-            
-            const dt = time - gameState.lastTime;
-            gameState.lastTime = time;
-            
-            if (!gameState.paused) {
-                gameState.drop += dt;
-                const interval = Math.max(100, 1000 - gameState.level * 50);
-                
-                if (gameState.drop > interval) {
-                    if (!collision(0, 1)) {
-                        gameState.current.y++;
-                    } else {
-                        merge();
-                        clearLines();
-                        nextPiece();
-                    }
-                    gameState.drop = 0;
-                    drawBoard();
-                }
-            }
-            
-            animFrame = requestAnimationFrame(gameLoop);
-        }
-
-        function startGame() {
-            console.log('Starting game...');
-            
-            if (!audioReady) {
-                console.log('Need to activate sound first');
-                document.getElementById('sound-init').style.display = 'flex';
-                return;
-            }
-            
-            gameState = {
-                board: Array(ROWS).fill().map(() => Array(COLS).fill(0)),
-                current: null,
-                next: [createPiece(), createPiece(), createPiece()],
-                hold: null,
-                canHold: true,
-                score: 0,
-                lines: 0,
-                level: 1,
-                over: false,
-                paused: false,
-                lastTime: 0,
-                drop: 0
-            };
-            
-            nextPiece();
-            updateUI();
-            drawBoard();
-            showScreen('game-screen');
-            playBGMusic();
-            gameLoop();
-        }
-
-        function updateUI() {
-            document.getElementById('score').textContent = gameState.score;
-            document.getElementById('level').textContent = gameState.level;
-            document.getElementById('lines').textContent = gameState.lines;
-        }
-
-        function moveLeft() {
-            if (gameState.over || gameState.paused) return;
-            if (!collision(-1, 0)) {
-                gameState.current.x--;
-                vibrate(10);
-                drawBoard();
-            }
-        }
-
-        function moveRight() {
-            if (gameState.over || gameState.paused) return;
-            if (!collision(1, 0)) {
-                gameState.current.x++;
-                vibrate(10);
-                drawBoard();
-            }
-        }
-
-        function rotate() {
-            if (gameState.over || gameState.paused) return;
-            const p = gameState.current;
-            const rotated = {
-                ...p,
-                shape: p.shape[0].map((_, i) => p.shape.map(r => r[i]).reverse())
-            };
-            const temp = gameState.current;
-            gameState.current = rotated;
-            if (!collision(0, 0)) {
-                beep(400, 0.05);
-                vibrate(20);
-                drawBoard();
-            } else {
-                gameState.current = temp;
-            }
-        }
-
-        function softDrop() {
-            if (gameState.over || gameState.paused) return;
-            if (!collision(0, 1)) {
-                gameState.current.y++;
-                gameState.score++;
-                drawBoard();
-                updateUI();
-            }
-        }
-
-        function hardDrop() {
-            if (gameState.over || gameState.paused) return;
-            while (!collision(0, 1)) {
-                gameState.current.y++;
-                gameState.score += 2;
-            }
-            merge();
-            clearLines();
-            nextPiece();
-            beep(200, 0.1);
-            vibrate(50);
-            drawBoard();
-            updateUI();
-        }
-
-        function holdPiece() {
-            if (gameState.over || gameState.paused || !gameState.canHold) return;
-            
-            if (!gameState.hold) {
-                gameState.hold = createPiece();
-                gameState.hold.type = gameState.current.type;
-                gameState.hold.shape = SHAPES[gameState.current.type];
-                gameState.hold.color = COLORS[gameState.current.type];
-                nextPiece();
-            } else {
-                const temp = createPiece();
-                temp.type = gameState.hold.type;
-                temp.shape = SHAPES[gameState.hold.type];
-                temp.color = COLORS[gameState.hold.type];
-                
-                gameState.hold.type = gameState.current.type;
-                gameState.hold.shape = SHAPES[gameState.current.type];
-                gameState.hold.color = COLORS[gameState.current.type];
-                
-                gameState.current = temp;
-            }
-            
-            gameState.canHold = false;
-            vibrate(30);
-            drawPreview(holdCtx, gameState.hold);
-            drawBoard();
-        }
-
-        function togglePause() {
-            if (gameState.over) return;
-            gameState.paused = !gameState.paused;
-            vibrate(20);
-            if (gameState.paused) {
-                stopBGMusic();
-            } else {
-                playBGMusic();
-            }
-        }
-
-        // Event Listeners
-        document.getElementById('btn-sound-activate').addEventListener('click', function() {
-            console.log('Sound activate clicked');
-            activateSound();
-        });
-
-        document.getElementById('btn-play').addEventListener('click', function() {
-            console.log('Play button clicked!');
-            startGame();
-        });
-
-        document.getElementById('btn-settings').addEventListener('click', function() {
-            console.log('Settings clicked');
-            showScreen('settings-screen');
-        });
-
-        document.getElementById('btn-highscore').addEventListener('click', function() {
-            console.log('Highscore clicked');
-            showScreen('highscore-screen');
-        });
-
-        document.getElementById('btn-help').addEventListener('click', function() {
-            console.log('Help clicked');
-            showScreen('help-screen');
-        });
-
-        document.getElementById('sound-tog').addEventListener('click', function() {
-            toggleSetting('sound');
-        });
-
-        document.getElementById('vib-tog').addEventListener('click', function() {
-            toggleSetting('vib');
-        });
-
-        document.getElementById('btn-settings-back').addEventListener('click', function() {
-            showScreen('menu');
-        });
-
-        document.getElementById('btn-highscore-back').addEventListener('click', function() {
-            showScreen('menu');
-        });
-
-        document.getElementById('btn-help-back').addEventListener('click', function() {
-            showScreen('menu');
-        });
-
-        document.getElementById('btn-reset-hs').addEventListener('click', function() {
-            if (confirm('Highscore wirklich zurücksetzen?')) {
-                localStorage.setItem('tetris-hs', '0');
-                document.getElementById('hs-val').textContent = '0';
-                vibrate(50);
-            }
-        });
-
-        document.getElementById('btn-left').addEventListener('click', moveLeft);
-        document.getElementById('btn-right').addEventListener('click', moveRight);
-        document.getElementById('btn-rotate').addEventListener('click', rotate);
-        document.getElementById('btn-down').addEventListener('click', softDrop);
-        document.getElementById('btn-drop').addEventListener('click', hardDrop);
-        document.getElementById('btn-hold').addEventListener('click', holdPiece);
-        document.getElementById('btn-pause').addEventListener('click', togglePause);
-
-        document.getElementById('btn-restart').addEventListener('click', function() {
-            document.getElementById('gameover').classList.remove('show');
-            stopBGMusic();
-            startGame();
-        });
-
-        document.getElementById('btn-menu').addEventListener('click', function() {
-            stopBGMusic();
-            showScreen('menu');
-        });
-
-        // Tastatur
-        document.addEventListener('keydown', function(e) {
-            if (gameState.over || gameState.paused) return;
-            
-            if (e.key === 'ArrowLeft') moveLeft();
-            if (e.key === 'ArrowRight') moveRight();
-            if (e.key === 'ArrowDown') softDrop();
-            if (e.key === 'ArrowUp') rotate();
-            if (e.key === ' ') hardDrop();
-            if (e.key === 'c' || e.key === 'C') holdPiece();
-            if (e.key === 'p' || e.key === 'P') togglePause();
-        });
-
-        // Touch Gesten
-        let touchX = 0;
-        let touchY = 0;
+        function activateSound(){audioCtx=new(window.AudioContext||window.webkitAudioContext)();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=600;o.type='square';g.gain.value=0.15;o.start();o.stop(audioCtx.currentTime+0.1);audioReady=true;document.getElementById('sound-init').style.display='none';setTimeout(()=>beep(700,0.08),100);setTimeout(()=>beep(900,0.08),200);}
+        function beep(f,d){if(!settings.sound||!audioReady)return;try{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=f;o.type='square';g.gain.value=0.15;o.start();o.stop(audioCtx.currentTime+d);}catch(e){}}
+        function playBGMusic(){if(!settings.sound||!audioReady||bgMusic)return;let i=0;function p(){if(!settings.sound||!gameState||gameState.over){bgMusic=null;return;}const n=melody[i];const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=n.note;o.type='square';g.gain.setValueAtTime(0.08,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+n.dur);o.start();o.stop(audioCtx.currentTime+n.dur);i=(i+1)%melody.length;bgMusic=setTimeout(p,n.dur*1000);}p();}
+        function stopBGMusic(){if(bgMusic){clearTimeout(bgMusic);bgMusic=null;}}
+        function vibrate(m){if(settings.vib&&navigator.vibrate)navigator.vibrate(m);}
+        function toggleSetting(k){settings[k]=!settings[k];document.getElementById(k+'-tog').classList.toggle('on');vibrate(20);}
         
-        boardCanvas.addEventListener('touchstart', function(e) {
-            touchX = e.touches[0].clientX;
-            touchY = e.touches[0].clientY;
-        });
+        const COLS=10,ROWS=20,SIZE=18;
+        const SHAPES={I:[[1,1,1,1]],O:[[1,1],[1,1]],T:[[0,1,0],[1,1,1]],S:[[0,1,1],[1,1,0]],Z:[[1,1,0],[0,1,1]],J:[[1,0,0],[1,1,1]],L:[[0,0,1],[1,1,1]]};
+        const COLORS={I:'#00ffff',O:'#ffff00',T:'#ff00ff',S:'#00ff00',Z:'#ff0000',J:'#0000ff',L:'#ff8800'};
         
-        boardCanvas.addEventListener('touchend', function(e) {
-            const dx = e.changedTouches[0].clientX - touchX;
-            const dy = e.changedTouches[0].clientY - touchY;
-            
-            if (Math.abs(dx) > Math.abs(dy)) {
-                if (dx > 40) moveRight();
-                else if (dx < -40) moveLeft();
-            } else {
-                if (dy > 40) hardDrop();
-                else if (dy < -40) rotate();
-            }
-        });
-
-        console.log('Tetris loaded successfully!');
+        const boardCanvas=document.getElementById('board');
+        const boardCtx=boardCanvas.getContext('2d');
+        const holdCanvas=document.getElementById('hold');
+        const holdCtx=holdCanvas.getContext('2d');
+        const nextCanvases=[document.getElementById('next1').getContext('2d'),document.getElementById('next2').getContext('2d'),document.getElementById('next3').getContext('2d')];
+        
+        let gameState={board:Array(ROWS).fill().map(()=>Array(COLS).fill(0)),current:null,next:[],hold:null,canHold:true,score:0,lines:0,level:1,over:false,paused:false,lastTime:0,drop:0};
+        let animFrame=null;
+        
+        function showScreen(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(s).classList.add('active');if(s==='highscore-screen')document.getElementById('hs-val').textContent=localStorage.getItem('tetris-hs')||'0';if(s==='menu'){document.getElementById('gameover').classList.remove('show');stopBGMusic();}}
+        function createPiece(){const t=Object.keys(SHAPES);const ty=t[Math.floor(Math.random()*t.length)];return{type:ty,shape:SHAPES[ty],color:COLORS[ty],x:Math.floor(COLS/2)-Math.floor(SHAPES[ty][0].length/2),y:0};}
+        function drawBlock(c,x,y,col){c.fillStyle=col;c.fillRect(x*SIZE,y*SIZE,SIZE,SIZE);c.strokeStyle='#000';c.lineWidth=2;c.strokeRect(x*SIZE,y*SIZE,SIZE,SIZE);}
+        function drawBoard(){boardCtx.fillStyle='#0a0a1a';boardCtx.fillRect(0,0,180,360);for(let y=0;y<ROWS;y++)for(let x=0;x<COLS;x++)if(gameState.board[y][x])drawBlock(boardCtx,x,y,gameState.board[y][x]);if(gameState.current){const p=gameState.current;p.shape.forEach((r,y)=>{r.forEach((v,x)=>{if(v)drawBlock(boardCtx,p.x+x,p.y+y,p.color);});});}}
+        function drawPreview(c,p){c.fillStyle='#0a0a1a';c.fillRect(0,0,50,50);if(p){const bs=10;const ox=(5-p.shape[0].length*2)/2;const oy=(5-p.shape.length*2)/2;p.shape.forEach((r,y)=>{r.forEach((v,x)=>{if(v){c.fillStyle=p.color;c.fillRect((ox+x*2)*bs,(oy+y*2)*bs,bs,bs);}});});}}
+        function collision(ox,oy){const p=gameState.current;return p.shape.some((r,y)=>r.some((v,x)=>{if(!v)return false;const nx=p.x+x+ox,ny=p.y+y+oy;return nx<0||nx>=COLS||ny>=ROWS||(ny>=0&&gameState.board[ny][nx]);}));}
+        function merge(){const p=gameState.current;p.shape.forEach((r,y)=>{r.forEach((v,x)=>{if(v&&p.y+y>=0)gameState.board[p.y+y][p.x+x]=p.color;});});}
+        function clearLines(){let c=0;for(let y=ROWS-1;y>=0;y--){if(gameState.board[y].every(x=>x!==0)){gameState.board.splice(y,1);gameState.board.unshift(Array(COLS).fill(0));c++;y++;}}if(c>0){const pts=[0,100,300,500,800];gameState.score+=pts[c]*gameState.level;gameState.lines+=c;gameState.level=Math.floor(gameState.lines/10)+1;beep(600,0.1);vibrate(100);updateUI();}}
+        function nextPiece(){gameState.current=gameState.next.shift();gameState.next.push(createPiece());gameState.canHold=true;if(collision(0,0))gameOver();nextCanvases.forEach((c,i)=>drawPreview(c,gameState.next[i]));}
+        function gameOver(){gameState.over=true;if(animFrame)cancelAnimationFrame(animFrame);stopBGMusic();const hs=parseInt(localStorage.getItem('tetris-hs')||'0');if(gameState.score>hs){localStorage.setItem('tetris-hs',gameState.score);document.getElementById('new-hs').textContent='🎉 NEUER HIGHSCORE! 🎉';}else document.getElementById('new-hs').textContent='';document.getElementById('final-score').textContent=gameState.score;document.getElementById('gameover').classList.add('show');beep(200,0.5);vibrate([100,50,100]);}
+        function gameLoop(t=0){if(gameState.over)return;const dt=t-gameState.lastTime;gameState.lastTime=t;if(!gameState.paused){gameState.drop+=dt;const i=Math.max(100,1000-gameState.level*50);if(gameState.drop>i){if(!collision(0,1))gameState.current.y++;else{merge();clearLines();nextPiece();}gameState.drop=0;drawBoard();}}animFrame=requestAnimationFrame(gameLoop);}
+        function startGame(){if(!audioReady){document.getElementById('sound-init').style.display='flex';return;}gameState={board:Array(ROWS).fill().map(()=>Array(COLS).fill(0)),current:null,next:[createPiece(),createPiece(),createPiece()],hold:null,canHold:true,score:0,lines:0,level:1,over:false,paused:false,lastTime:0,drop:0};nextPiece();updateUI();drawBoard();showScreen('game-screen');playBGMusic();gameLoop();}
+        function updateUI(){document.getElementById('score').textContent=gameState.score;document.getElementById('level').textContent=gameState.level;document.getElementById('lines').textContent=gameState.lines;}
+        function moveLeft(){if(gameState.over||gameState.paused)return;if(!collision(-1,0)){gameState.current.x--;vibrate(10);drawBoard();}}
+        function moveRight(){if(gameState.over||gameState.paused)return;if(!collision(1,0)){gameState.current.x++;vibrate(10);drawBoard();}}
+        function rotate(){if(gameState.over||gameState.paused)return;const p=gameState.current;const r={...p,shape:p.shape[0].map((_,i)=>p.shape.map(x=>x[i]).reverse())};const t=gameState.current;gameState.current=r;if(!collision(0,0)){beep(400,0.05);vibrate(20);drawBoard();}else gameState.current=t;}
+        function softDrop(){if(gameState.over||gameState.paused)return;if(!collision(0,1)){gameState.current.y++;gameState.score++;drawBoard();updateUI();}}
+        function hardDrop(){if(gameState.over||gameState.paused)return;while(!collision(0,1)){gameState.current.y++;gameState.score+=2;}merge();clearLines();nextPiece();beep(200,0.1);vibrate(50);drawBoard();updateUI();}
+        function holdPiece(){if(gameState.over||gameState.paused||!gameState.canHold)return;if(!gameState.hold){gameState.hold=createPiece();gameState.hold.type=gameState.current.type;gameState.hold.shape=SHAPES[gameState.current.type];gameState.hold.color=COLORS[gameState.current.type];nextPiece();}else{const t=createPiece();t.type=gameState.hold.type;t.shape=SHAPES[gameState.hold.type];t.color=COLORS[gameState.hold.type];gameState.hold.type=gameState.current.type;gameState.hold.shape=SHAPES[gameState.current.type];gameState.hold.color=COLORS[gameState.current.type];gameState.current=t;}gameState.canHold=false;vibrate(30);drawPreview(holdCtx,gameState.hold);drawBoard();}
+        function togglePause(){if(gameState.over)return;gameState.paused=!gameState.paused;vibrate(20);if(gameState.paused)stopBGMusic();else playBGMusic();}
+        
+        document.getElementById('btn-sound-activate').addEventListener('click',activateSound);
+        document.getElementById('btn-play').addEventListener('click',startGame);
+        document.getElementById('btn-settings').addEventListener('click',()=>showScreen('settings-screen'));
+        document.getElementById('btn-highscore').addEventListener('click',()=>showScreen('highscore-screen'));
+        document.getElementById('btn-help').addEventListener('click',()=>showScreen('help-screen'));
+        document.getElementById('sound-tog').addEventListener('click',()=>toggleSetting('sound'));
+        document.getElementById('vib-tog').addEventListener('click',()=>toggleSetting('vib'));
+        document.getElementById('btn-settings-back').addEventListener('click',()=>showScreen('menu'));
+        document.getElementById('btn-highscore-back').addEventListener('click',()=>showScreen('menu'));
+        document.getElementById('btn-help-back').addEventListener('click',()=>showScreen('menu'));
+        document.getElementById('btn-reset-hs').addEventListener('click',()=>{if(confirm('Highscore zurücksetzen?')){localStorage.setItem('tetris-hs','0');document.getElementById('hs-val').textContent='0';vibrate(50);}});
+        document.getElementById('btn-left').addEventListener('click',moveLeft);
+        document.getElementById('btn-right').addEventListener('click',moveRight);
+        document.getElementById('btn-rotate').addEventListener('click',rotate);
+        document.getElementById('btn-down').addEventListener('click',softDrop);
+        document.getElementById('btn-drop').addEventListener('click',hardDrop);
+        document.getElementById('btn-hold').addEventListener('click',holdPiece);
+        document.getElementById('btn-pause').addEventListener('click',togglePause);
+        document.getElementById('btn-restart').addEventListener('click',()=>{document.getElementById('gameover').classList.remove('show');stopBGMusic();startGame();});
+        document.getElementById('btn-menu').addEventListener('click',()=>{stopBGMusic();showScreen('menu');});
+        
+        document.addEventListener('keydown',(e)=>{if(gameState.over||gameState.paused)return;if(e.key==='ArrowLeft')moveLeft();if(e.key==='ArrowRight')moveRight();if(e.key==='ArrowDown')softDrop();if(e.key==='ArrowUp')rotate();if(e.key===' ')hardDrop();if(e.key==='c'||e.key==='C')holdPiece();if(e.key==='p'||e.key==='P')togglePause();});
+        
+        let touchX=0,touchY=0;
+        boardCanvas.addEventListener('touchstart',(e)=>{touchX=e.touches[0].clientX;touchY=e.touches[0].clientY;});
+        boardCanvas.addEventListener('touchend',(e)=>{const dx=e.changedTouches[0].clientX-touchX;const dy=e.changedTouches[0].clientY-touchY;if(Math.abs(dx)>Math.abs(dy)){if(dx>40)moveRight();else if(dx<-40)moveLeft();}else{if(dy>40)hardDrop();else if(dy<-40)rotate();}});
+        
+        console.log('Tetris ready!');
     </script>
 </body>
 </html>
